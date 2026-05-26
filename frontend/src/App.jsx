@@ -10,7 +10,7 @@ export default function App() {
   const [role, setRole] = useState(() => localStorage.getItem("role"));
   const [view, setView] = useState("login");
 
-  // 🔥 token gelince otomatik view ayarla
+  // token gelince otomatik view ayarla
   useEffect(() => {
     if (token) {
       if (role === "admin") setView("admin");
@@ -21,7 +21,7 @@ export default function App() {
     }
   }, [token, role]);
 
-  // 🔥 login handler
+  // login handler
   const handleSetToken = (newToken) => {
     if (newToken) {
       localStorage.setItem("token", newToken);
@@ -37,7 +37,7 @@ export default function App() {
     }
   };
 
-  // 🔥 SAYFA YÖNETİMİ
+  // SAYFA YÖNETİMİ
   if (!token) {
     return view === "login" ? (
       <Login setToken={handleSetToken} setView={setView} />

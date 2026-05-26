@@ -35,7 +35,7 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-// TASK SİL (GÜNCEL: Kendi görevini veya Admin ise siler)
+// TASK SİL
 exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findOne({ where: { id: req.params.id } });

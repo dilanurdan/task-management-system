@@ -9,7 +9,7 @@ export default function Tasks({ token, setToken, setView }) {
 
   const role = localStorage.getItem("role");
 
-  // 🔥 TASK ÇEK
+  // TASK ÇEK
   const getTasks = async () => {
     if (!token) return;
 
@@ -30,7 +30,7 @@ export default function Tasks({ token, setToken, setView }) {
     }
   };
 
-  // 🔥 TASK EKLE
+  // TASK EKLE
   const addTask = async () => {
     if (!title.trim()) return;
 
@@ -51,7 +51,7 @@ export default function Tasks({ token, setToken, setView }) {
     }
   };
 
-  // 🔥 TASK SİL
+  // TASK SİL
   const deleteTask = async (id) => {
     if (!window.confirm("Silmek istiyor musun?")) return;
 
@@ -66,7 +66,7 @@ export default function Tasks({ token, setToken, setView }) {
     }
   };
 
-  // 🔥 LOGOUT
+  // LOGOUT
   const logout = () => {
     localStorage.clear();
     setToken(null);

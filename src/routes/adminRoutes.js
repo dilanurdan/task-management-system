@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../models/User");
 const Task = require("../models/Task");
 
-// 🔥 USERS (admin + manager)
+// USERS (admin + manager)
 router.get("/users", async (req, res) => {
   if (req.user.role !== "admin" && req.user.role !== "manager") {
     return res.status(403).json({ message: "Access denied" });
@@ -14,7 +14,7 @@ router.get("/users", async (req, res) => {
   res.json(users);
 });
 
-// 🔥 STATS (sadece admin)
+// STATS (sadece admin)
 router.get("/stats", async (req, res) => {
   if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Access denied" });
@@ -26,7 +26,7 @@ router.get("/stats", async (req, res) => {
   res.json({ userCount, taskCount });
 });
 
-// 🔥 ALL TASKS (admin + manager)
+// ALL TASKS (admin + manager)
 router.get("/tasks", async (req, res) => {
   if (req.user.role !== "admin" && req.user.role !== "manager") {
     return res.status(403).json({ message: "Access denied" });

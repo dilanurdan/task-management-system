@@ -19,7 +19,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 
-// 🔥 TEK KONTROL NOKTASI
+// TEK KONTROL NOKTASI
 app.use("/admin", authMiddleware, adminRoutes);
 
 // PROTECTED TEST

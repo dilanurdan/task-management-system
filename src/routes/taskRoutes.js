@@ -6,24 +6,24 @@ const {
   getTasks,
   deleteTask,
   updateTask,
-  getTasksByStatus // 🔥 EKLENDİ
+  getTasksByStatus
 } = require("../controllers/taskController");
 
 const authMiddleware = require("../middleware/authMiddleware");
 
-// 🔥 TASK OLUŞTUR
+// TASK OLUŞTUR
 router.post("/", authMiddleware, createTask);
 
-// 🔥 TASK LİSTELE
+// TASK LİSTELE
 router.get("/", authMiddleware, getTasks);
 
-// 🔥 TASK SİL
+// TASK SİL
 router.delete("/:id", authMiddleware, deleteTask);
 
-// 🔥 TASK GÜNCELLE
+// TASK GÜNCELLE
 router.put("/:id", authMiddleware, updateTask);
 
-// 🔥 TASK STATUS FİLTRE (YENİ)
+// TASK STATUS FİLTRE
 router.get("/status/:status", authMiddleware, getTasksByStatus);
 
 module.exports = router;

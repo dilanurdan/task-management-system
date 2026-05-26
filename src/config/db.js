@@ -1,13 +1,14 @@
-const { Sequelize } = require("sequelize");
 require("dotenv").config();
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
-  "task_db",
-  "root",
-  "danlar",
+  process.env.DB_NAME || "task_db",
+  process.env.DB_USER || "root",
+  process.env.DB_PASSWORD || "danlar",
   {
-    host: "localhost",
+    host: process.env.DB_HOST || "localhost",
     dialect: "mysql",
+    logging: false, // Konsolda gereksiz SQL sorgularını gizle
   }
 );
 

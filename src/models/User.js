@@ -1,11 +1,11 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-// 1️⃣ ÖNCE User tanımla
+//  ÖNCE User tanımlarız
 const User = sequelize.define("User", {
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   email: {
     type: DataTypes.STRING,
@@ -22,10 +22,10 @@ const User = sequelize.define("User", {
   },
 });
 
-// 2️⃣ SONRA Task import et
+// SONRA Task import ettik
 const Task = require("./Task");
 
-// 3️⃣ SONRA ilişki kur
+// SONRA ilişki kurulur
 User.hasMany(Task);
 Task.belongsTo(User);
 

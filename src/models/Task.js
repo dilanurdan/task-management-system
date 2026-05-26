@@ -13,6 +13,10 @@ const Task = sequelize.define("Task", {
     type: DataTypes.ENUM("todo", "in-progress", "done"),
     defaultValue: "todo",
   },
+  UserId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 });
 
 module.exports = Task;

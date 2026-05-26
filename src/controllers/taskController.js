@@ -1,8 +1,13 @@
 const Task = require("../models/Task");
 
-// 🔥 TASK OLUŞTUR
+// TASK OLUŞTUR
 exports.createTask = async (req, res) => {
   try {
+    // VALIDATION
+    if (!req.body.title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
     const task = await Task.create({
       title: req.body.title,
       description: req.body.description,
@@ -11,11 +16,12 @@ exports.createTask = async (req, res) => {
 
     res.json(task);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// 🔥 TASK LİSTELE
+// TASK LİSTELE
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await Task.findAll({
@@ -24,33 +30,40 @@ exports.getTasks = async (req, res) => {
 
     res.json(tasks);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// 🔥 TASK SİL (ADMIN ONLY)
+// TASK SİL (GÜNCEL: Kendi görevini veya Admin ise siler)
 exports.deleteTask = async (req, res) => {
   try {
-    // 🔥 SADECE ADMIN SİLEBİLİR
-    if (req.user.role !== "admin") {
-      return res.status(403).json({ message: "Yetkin yok" });
+    const task = await Task.findOne({ where: { id: req.params.id } });
+
+    if (!task) {
+      return res.status(404).json({ message: "Görev bulunamadı" });
     }
 
-    await Task.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    if (req.user.role !== "admin" && task.UserId !== req.user.id) {
+      return res.status(403).json({ message: "Bu görevi silmeye yetkiniz yok" });
+    }
 
-    res.json({ message: "Task silindi" });
+    await task.destroy();
+
+    res.json({ message: "Task başarıyla silindi" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// 🔥 TASK GÜNCELLE
+// TASK GÜNCELLE
 exports.updateTask = async (req, res) => {
   try {
+    if (!req.body.title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
     await Task.update(
       {
         title: req.body.title,
@@ -67,11 +80,12 @@ exports.updateTask = async (req, res) => {
 
     res.json({ message: "Task güncellendi" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// 🔥 TASK STATUS FİLTRE (EXTRA FEATURE)
+// TASK STATUS FİLTRE
 exports.getTasksByStatus = async (req, res) => {
   try {
     const tasks = await Task.findAll({
@@ -83,6 +97,7 @@ exports.getTasksByStatus = async (req, res) => {
 
     res.json(tasks);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
